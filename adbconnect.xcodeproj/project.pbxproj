@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		569999B627479AA700EA77B2 /* adb in Resources */ = {isa = PBXBuildFile; fileRef = EDF6FC1C25FA03F9002D1EF2 /* adb */; };
 		EDF6FC0325F8A6E3002D1EF2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF6FC0225F8A6E3002D1EF2 /* AppDelegate.swift */; };
 		EDF6FC0525F8A6E3002D1EF2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF6FC0425F8A6E3002D1EF2 /* ContentView.swift */; };
 		EDF6FC0725F8A6E3002D1EF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDF6FC0625F8A6E3002D1EF2 /* Assets.xcassets */; };
 		EDF6FC0A25F8A6E3002D1EF2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDF6FC0925F8A6E3002D1EF2 /* Preview Assets.xcassets */; };
 		EDF6FC0D25F8A6E3002D1EF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDF6FC0B25F8A6E3002D1EF2 /* Main.storyboard */; };
-		EDF6FC1D25FA03F9002D1EF2 /* adb in Resources */ = {isa = PBXBuildFile; fileRef = EDF6FC1C25FA03F9002D1EF2 /* adb */; };
 		EDF6FC2025FA0514002D1EF2 /* AdbHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF6FC1F25FA0514002D1EF2 /* AdbHelper.swift */; };
 		EDF6FC2325FA1E28002D1EF2 /* DevicesPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF6FC2225FA1E28002D1EF2 /* DevicesPopover.swift */; };
 		EDF6FC2625FA22BA002D1EF2 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF6FC2525FA22BA002D1EF2 /* Device.swift */; };
@@ -153,7 +153,7 @@
 			files = (
 				EDF6FC0D25F8A6E3002D1EF2 /* Main.storyboard in Resources */,
 				EDF6FC0A25F8A6E3002D1EF2 /* Preview Assets.xcassets in Resources */,
-				EDF6FC1D25FA03F9002D1EF2 /* adb in Resources */,
+				569999B627479AA700EA77B2 /* adb in Resources */,
 				EDF6FC0725F8A6E3002D1EF2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -310,9 +310,9 @@
 				CODE_SIGN_ENTITLEMENTS = adbconnect/adbconnect.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"adbconnect/Preview Content\"";
-				DEVELOPMENT_TEAM = V3237NN4PA;
+				DEVELOPMENT_TEAM = 67HL7V3LG2;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = adbconnect/Info.plist;
@@ -321,7 +321,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.naman14.adbconnect;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -336,9 +336,9 @@
 				CODE_SIGN_ENTITLEMENTS = adbconnect/adbconnect.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"adbconnect/Preview Content\"";
-				DEVELOPMENT_TEAM = V3237NN4PA;
+				DEVELOPMENT_TEAM = 67HL7V3LG2;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = adbconnect/Info.plist;
@@ -347,7 +347,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.naman14.adbconnect;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

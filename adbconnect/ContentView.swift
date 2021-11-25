@@ -57,38 +57,56 @@ struct DeviceActionsView: View {
         return device.id.contains("5555")
     }
     
+    private func chooseApk(onChoose: (String)->Void) {
+        let dialog = NSOpenPanel();
+
+        dialog.title                   = "Choose apk file to install";
+        dialog.showsResizeIndicator    = true;
+        dialog.showsHiddenFiles        = false;
+        dialog.allowsMultipleSelection = false;
+        dialog.canChooseDirectories    = false;
+        dialog.allowedFileTypes        = ["apk"];
+
+        if (dialog.runModal() ==  NSApplication.ModalResponse.OK) {
+            let result = dialog.url // Pathname of the file
+
+            if (result != nil) {
+                let path: String = result!.path
+                
+                // path contains the file path e.g
+                // /Users/ourcodeworld/Desktop/tiger.jpeg
+                onChoose(path)
+            }
+            
+        } else {
+            // User clicked on "Cancel"
+            return
+        }
+    }
+    
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             
-            //device info
+            // device info
             HStack(alignment: .top) {
                 Text(device.name)
                 Text("-")
                 Text(device.id)
             }.frame(maxWidth: .infinity, alignment: .leading).padding(.bottom, 5)
             
-            // tcp connection
+            // install apk
             HStack(alignment: .top) {
                 Image("WifiIcon").resizable().frame(width: 18.0, height: 18.0)
-                isTcpConnected()
-                    ? Text("Disconnect remote connection")
-                    : Text("Establish remote connection")
+                Text("Install apk")
             }.contentShape(Rectangle())
             .onTapGesture {
-                if(isTcpConnected()) {
-                    statusMessaage = "Disconnected remoted connection"
-                    adb.disconnectTCPConnection(deviceId: device.id)
-                } else {
-                    statusMessaage = "Connected to adb remotely"
-                    adb.makeTCPConnection(deviceId: device.id)
-                }
-                // refresh device list
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    devices = adb.getDevices()
+                chooseApk { (p) in
+                    statusMessaage = self.adb.installApk(devicedId: self.device.id, path: p)
                 }
             }
             
-            //screenshot
+            // screenshot
             HStack(alignment: .top) {
                 Image("ScreenshotIcon").resizable().frame(width: 18.0, height: 18.0)
                 Text("Take screenshot")

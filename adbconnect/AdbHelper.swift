@@ -24,6 +24,16 @@ class AdbHelper {
             }
     }
     
+    @discardableResult
+    func runShellWithArgs(_ command: String) -> Int32 {
+        let task = Process()
+        task.launchPath = "/bin/bash"
+        task.arguments = ["-c", command]
+        task.launch()
+        task.waitUntilExit()
+        return task.terminationStatus
+    }
+    
     func getDeviceName(deviceId: String) -> String {
         let command = "-s " + deviceId + " shell getprop ro.product.model"
         return runAdbCommand(command)
@@ -32,7 +42,9 @@ class AdbHelper {
     func takeScreenshot(deviceId: String) {
         let time = formattedTime()
         _ = runAdbCommand("-s " + deviceId + " shell screencap -p /sdcard/screencap_adbtool.png")
-        _ = self.runAdbCommand("-s " + deviceId + " pull /sdcard/screencap_adbtool.png ~/Desktop/screen" + time + ".png")
+        let outFile = "~/Desktop/screen" + time + ".png"
+        _ = self.runAdbCommand("-s " + deviceId + " pull /sdcard/screencap_adbtool.png " + outFile)
+        runShellWithArgs("open -a 'Preview.app' " + outFile)
     }
     
     func recordScreen(deviceId: String) {
@@ -50,9 +62,11 @@ class AdbHelper {
         // kill already running screenrecord process to stop recording
         _ = runAdbCommand("-s " + deviceId + " shell pkill -INT screenrecord")
         
+        let outFile = "~/Desktop/record" + time + ".mp4"
+        
         // after killing the screenrecord process,we have to for some time before pulling the file else file stays corrupted
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            _ = self.runAdbCommand("-s " + deviceId + " pull /sdcard/screenrecord_adbtool.mp4 ~/Desktop/record" + time + ".mp4")
+            _ = self.runAdbCommand("-s " + deviceId + " pull /sdcard/screenrecord_adbtool.mp4 " + outFile)
         }
     }
     
@@ -82,6 +96,11 @@ class AdbHelper {
         _ = runAdbCommand(command)
     }
     
+    func installApk(devicedId: String, path: String) -> String {
+        let command = "-s " + devicedId + " install '" + path + "'"
+        return runAdbCommand(command)
+    }
+    
     func captureBugReport(deviceId: String) {
         let time = formattedTime()
         DispatchQueue.global(qos: .background).async {
@@ -91,7 +110,7 @@ class AdbHelper {
     
     private func formattedTime() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd-HH-mm"
+        formatter.dateFormat = "yyyy-MM-dd-HH-mm-ss-SSS"
         let time = formatter.string(from: Date())
         return time
     }
@@ -102,7 +121,7 @@ class AdbHelper {
         
         task.standardOutput = pipe
         task.standardError = pipe
-        task.arguments = ["-c", adb!.path + " " + command]
+        task.arguments = ["-c", "'" + adb!.path + "'" + " " + command]
         task.launchPath = "/bin/sh"
         task.launch()
         
