@@ -51,6 +51,7 @@ struct DeviceActionsView: View {
     @State private var deeplink: String = ""
     @State private var showAdvanced: Bool = false
     @State private var isRecordingScreen: Bool = false
+    @State private var packageName: String = ""
     
     private func isTcpConnected() -> Bool {
         // if already connected over tcp, name would contain the port on which we connected
@@ -133,6 +134,46 @@ struct DeviceActionsView: View {
                 }
             }
             
+            HStack(alignment: .top) {
+                TextField("input package name", text: $packageName).padding(.leading, 5)
+                Button(action: {
+                    statusMessaage = "stat app"
+                    adb.openApp(deviceId: device.id, packageName: packageName)
+                }, label: {
+                    Text("Start App")
+                })
+            }
+            
+            HStack(alignment: .top) {
+                TextField("input package name", text: $packageName).padding(.leading, 5)
+                Button(action: {
+                    statusMessaage = "uninstall app"
+                    adb.uninstallApk(deviceId: device.id, packageName: packageName)
+                }, label: {
+                    Text("Uninstall App")
+                })
+            }
+            
+            HStack(alignment: .top) {
+                TextField("input package name", text: $packageName).padding(.leading, 5)
+                Button(action: {
+                    statusMessaage = "restart app"
+                    adb.restartApp(deviceId: device.id, packageName: packageName)
+                }, label: {
+                    Text("Restart App")
+                })
+            }
+            
+            HStack(alignment: .top) {
+                TextField("input package name", text: $packageName).padding(.leading, 5)
+                Button(action: {
+                    statusMessaage = "clear data and restart"
+                    adb.clearDataAndStart(deviceId: device.id, packageName: packageName)
+                }, label: {
+                    Text("Clear Data Restart")
+                })
+            }
+            
             // advanced options
             HStack(alignment: .top) {
                 Image("SettingsIcon").resizable().frame(width: 18.0, height: 18.0)
@@ -143,6 +184,26 @@ struct DeviceActionsView: View {
                 showAdvanced = !showAdvanced
             }
             if (showAdvanced) {
+                HStack(alignment: .top) {
+                    TextField("input package name", text: $packageName).padding(.leading, 5)
+                    Button(action: {
+                        statusMessaage = "kill app"
+                        adb.killApp(deviceId: device.id, packageName: packageName)
+                    }, label: {
+                        Text("Kill App")
+                    })
+                }.padding(.leading, 20)
+                
+                HStack(alignment: .top) {
+                    TextField("input package name", text: $packageName).padding(.leading, 5)
+                    Button(action: {
+                        statusMessaage = "clear app data"
+                        adb.clearData(deviceId: device.id, packageName: packageName)
+                    }, label: {
+                        Text("Clear Data")
+                    })
+                }.padding(.leading, 20)
+                
                 // open deeplink
                 HStack(alignment: .top) {
                     Image("DeeplinkIcon").resizable().frame(width: 18.0, height: 18.0)

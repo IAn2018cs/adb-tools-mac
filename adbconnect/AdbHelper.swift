@@ -101,6 +101,36 @@ class AdbHelper {
         return runAdbCommand(command)
     }
     
+    func uninstallApk(deviceId: String, packageName: String) {
+        let command = "-s " + deviceId + " uninstall " + packageName
+        _ = runAdbCommand(command)
+    }
+    
+    func clearData(deviceId: String, packageName: String) {
+        let command = "-s " + deviceId + " shell pm clear " + packageName
+        _ = runAdbCommand(command)
+    }
+    
+    func openApp(deviceId: String, packageName: String) {
+        let command = "-s " + deviceId + " shell monkey -p " + packageName + " -c android.intent.category.LAUNCHER 1"
+        _ = runAdbCommand(command)
+    }
+    
+    func killApp(deviceId: String, packageName: String) {
+        let command = "-s " + deviceId + " shell am force-stop " + packageName
+        _ = runAdbCommand(command)
+    }
+    
+    func restartApp(deviceId: String, packageName: String) {
+        killApp(deviceId: deviceId, packageName: packageName)
+        openApp(deviceId: deviceId, packageName: packageName)
+    }
+    
+    func clearDataAndStart(deviceId: String, packageName: String) {
+        clearData(deviceId: deviceId, packageName: packageName)
+        openApp(deviceId: deviceId, packageName: packageName)
+    }
+    
     func captureBugReport(deviceId: String) {
         let time = formattedTime()
         DispatchQueue.global(qos: .background).async {
