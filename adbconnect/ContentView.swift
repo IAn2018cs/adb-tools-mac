@@ -52,6 +52,7 @@ struct DeviceActionsView: View {
     @State private var showAdvanced: Bool = false
     @State private var isRecordingScreen: Bool = false
     @State private var packageName: String = ""
+    @State private var showAppOpt: Bool = false
     
     private func isTcpConnected() -> Bool {
         // if already connected over tcp, name would contain the port on which we connected
@@ -134,44 +135,83 @@ struct DeviceActionsView: View {
                 }
             }
             
+            // open date setting
             HStack(alignment: .top) {
-                TextField("input package name", text: $packageName).padding(.leading, 5)
-                Button(action: {
-                    statusMessaage = "stat app"
-                    adb.openApp(deviceId: device.id, packageName: packageName)
-                }, label: {
-                    Text("Start App")
-                })
+                Image("DateIcon").resizable().frame(width: 18.0, height: 18.0)
+                Text("Open Date Setting")
+            }.contentShape(Rectangle())
+            .onTapGesture {
+                statusMessaage = "open date & time setting"
+                adb.openDateSetting(deviceId: device.id)
             }
             
+            // operate app
             HStack(alignment: .top) {
-                TextField("input package name", text: $packageName).padding(.leading, 5)
-                Button(action: {
-                    statusMessaage = "uninstall app"
-                    adb.uninstallApk(deviceId: device.id, packageName: packageName)
-                }, label: {
-                    Text("Uninstall App")
-                })
+                Image("AppOptIcon").resizable().frame(width: 18.0, height: 18.0)
+                Text(showAppOpt ? "Hide app operate" : "Show app operate")
+                    .font(showAppOpt ? Font.body.bold() : Font.body)
+            }.contentShape(Rectangle())
+            .onTapGesture {
+                showAppOpt = !showAppOpt
             }
-            
-            HStack(alignment: .top) {
-                TextField("input package name", text: $packageName).padding(.leading, 5)
-                Button(action: {
-                    statusMessaage = "restart app"
-                    adb.restartApp(deviceId: device.id, packageName: packageName)
-                }, label: {
-                    Text("Restart App")
-                })
-            }
-            
-            HStack(alignment: .top) {
-                TextField("input package name", text: $packageName).padding(.leading, 5)
-                Button(action: {
-                    statusMessaage = "clear data and restart"
-                    adb.clearDataAndStart(deviceId: device.id, packageName: packageName)
-                }, label: {
-                    Text("Clear Data Restart")
-                })
+            if (showAppOpt) {
+                HStack(alignment: .top) {
+                    TextField("input package name", text: $packageName).padding(.leading, 5)
+                }.padding(.leading, 20)
+                
+                HStack(alignment: .top) {
+                    Button(action: {
+                        statusMessaage = "stat app"
+                        adb.openApp(deviceId: device.id, packageName: packageName)
+                    }, label: {
+                        Text("Start App")
+                    })
+                }.padding(.leading, 20)
+                
+                HStack(alignment: .top) {
+                    Button(action: {
+                        statusMessaage = "uninstall app"
+                        adb.uninstallApk(deviceId: device.id, packageName: packageName)
+                    }, label: {
+                        Text("Uninstall App")
+                    })
+                }.padding(.leading, 20)
+                
+                HStack(alignment: .top) {
+                    Button(action: {
+                        statusMessaage = "restart app"
+                        adb.restartApp(deviceId: device.id, packageName: packageName)
+                    }, label: {
+                        Text("Restart App")
+                    })
+                }.padding(.leading, 20)
+                
+                HStack(alignment: .top) {
+                    Button(action: {
+                        statusMessaage = "clear data and restart"
+                        adb.clearDataAndStart(deviceId: device.id, packageName: packageName)
+                    }, label: {
+                        Text("Clear Data And Restart")
+                    })
+                }.padding(.leading, 20)
+                
+                HStack(alignment: .top) {
+                    Button(action: {
+                        statusMessaage = "kill app"
+                        adb.killApp(deviceId: device.id, packageName: packageName)
+                    }, label: {
+                        Text("Kill App")
+                    })
+                }.padding(.leading, 20)
+                
+                HStack(alignment: .top) {
+                    Button(action: {
+                        statusMessaage = "clear app data"
+                        adb.clearData(deviceId: device.id, packageName: packageName)
+                    }, label: {
+                        Text("Clear Data")
+                    })
+                }.padding(.leading, 20)
             }
             
             // advanced options
@@ -184,26 +224,6 @@ struct DeviceActionsView: View {
                 showAdvanced = !showAdvanced
             }
             if (showAdvanced) {
-                HStack(alignment: .top) {
-                    TextField("input package name", text: $packageName).padding(.leading, 5)
-                    Button(action: {
-                        statusMessaage = "kill app"
-                        adb.killApp(deviceId: device.id, packageName: packageName)
-                    }, label: {
-                        Text("Kill App")
-                    })
-                }.padding(.leading, 20)
-                
-                HStack(alignment: .top) {
-                    TextField("input package name", text: $packageName).padding(.leading, 5)
-                    Button(action: {
-                        statusMessaage = "clear app data"
-                        adb.clearData(deviceId: device.id, packageName: packageName)
-                    }, label: {
-                        Text("Clear Data")
-                    })
-                }.padding(.leading, 20)
-                
                 // open deeplink
                 HStack(alignment: .top) {
                     Image("DeeplinkIcon").resizable().frame(width: 18.0, height: 18.0)

@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create the popover
         let popover = DevicesPopover()
-        popover.contentSize = NSSize(width: 300, height: 250)
+        popover.contentSize = NSSize(width: 300, height: 450)
         popover.behavior = .transient
         self.popover = popover
         

@@ -131,6 +131,11 @@ class AdbHelper {
         openApp(deviceId: deviceId, packageName: packageName)
     }
     
+    func openDateSetting(deviceId: String) {
+        let command = "-s " + deviceId + " shell am start -a android.settings.DATE_SETTINGS"
+        _ = runAdbCommand(command)
+    }
+    
     func captureBugReport(deviceId: String) {
         let time = formattedTime()
         DispatchQueue.global(qos: .background).async {
